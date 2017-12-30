@@ -11,6 +11,7 @@ class Block:
         self.hash = self.hash_block()
 
     def hash_block(self):
+        """hashing of block's data"""
         sha = hasher.sha256()
         sha.update((str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_hash)).encode('utf-8'))
 
@@ -18,10 +19,12 @@ class Block:
 
 
 def create_genesis_block():
+    """creating of first block"""
     return Block(0, date.datetime.now(), "Genesis Block", "0")
 
 
 def next_block(last_block):
+    """creating of each new block on the basis of previous one"""
     this_index = last_block.index + 1
     this_timestamp = date.datetime.now()
     this_data = "Hey! I'm block " + str(this_index)
@@ -30,9 +33,10 @@ def next_block(last_block):
     return Block(this_index, this_timestamp, this_data, this_hash)
 
 
+"""Sample blockchain to show how it's working"""
 blockchain = [create_genesis_block()]
 previous_block = blockchain[0]
-num_of_blocks_to_add = 20
+num_of_blocks_to_add = 20           # the limit of transactions
 
 for i in range(0, num_of_blocks_to_add):
     block_to_add = next_block(previous_block)
